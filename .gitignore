@@ -1,0 +1,14 @@
+# General
+/.idea/*
+.DS_Store
+*.orig
+.vscode
+
+# Ignore .terraform work directories and related files
+.terraform/
+*.tfstate.*
+*.plan
+*.tfplan
+
+# Ignore log files if any
+*.log
