@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "sm-s3-bucket-data" {
   bucket = "${var.profile}-${var.server_cluster}-${var.environment}-${var.bucket_postfix}"
-  acl   = var.bucket_acl
+  acl  = var.bucket_acl
 
   force_destroy = var.force_destroy
 
