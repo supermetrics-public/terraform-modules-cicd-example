@@ -38,6 +38,7 @@ jobs:
       - name: 'Run terraform format'
         id: fmt
         run: python scripts/helper.py run-terraform-fmt -f "${{ steps.changed_files.outputs.all }}"
+        continue-on-error: true
 
       - name: 'Run terraform validate'
         id: validate
