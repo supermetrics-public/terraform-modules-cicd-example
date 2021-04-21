@@ -1,5 +1,7 @@
 # Supermetrics Terraform Modules Registry
 
+[![CI checks](https://github.com/duy0611/terraform-modules-cicd-example/actions/workflows/ci.yaml/badge.svg)](https://github.com/duy0611/terraform-modules-cicd-example/actions/workflows/ci.yaml)
+
 The project contains Supermetrics Terraform Registry modules for all the infrastructure
 
 Project structure:
