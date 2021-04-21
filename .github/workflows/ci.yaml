@@ -35,12 +35,35 @@ jobs:
         with:
           terraform_version: ${{ env.tf_version }}
 
-      - name: 'Run terraform format and validate'
-        run: |
-          echo 'terraform fmt'
-          echo 'terraform validate'
+      - name: 'Run terraform format'
+        id: fmt
+        run: python scripts/helper.py run-terraform-fmt -f "${{ steps.changed_files.outputs.all }}"
+        continue-on-error: true
+
+      - name: 'Run terraform validate'
+        id: validate
+        run: echo 'terraform validate'
 
       - name: 'Run terraform tests'
-        run: |
-          echo 'terraform plan'
+        id: tests
+        run: echo 'terraform plan'
 
+      - name: 'Add comment on PR'
+        uses: actions/github-script@0.9.0
+        if: github.event_name == 'pull_request' && (steps.fmt.outcome != 'success' || steps.validate.outcome != 'success' || steps.tests.outcome != 'success')
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `
+            #### Terraform Format and Style 🖌  \`${{ steps.fmt.outcome }}\`
+            #### Terraform Validation 🤖  \`${{ steps.validate.outcome }}\`
+            #### Terraform Tests 📖  \`${{ steps.tests.outcome }}\`
+            
+            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+              
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
