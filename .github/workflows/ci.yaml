@@ -24,7 +24,8 @@ jobs:
         id: changed_files
         uses: jitterbit/get-changed-files@v1
       
-      - run: |
+      - name: 'Print out list of changed files'
+        run: |
           for changed_file in ${{ steps.changed_files.outputs.all }}; do
             echo "Do something with this ${changed_file}."
           done
@@ -35,6 +36,11 @@ jobs:
           terraform_version: ${{ env.tf_version }}
 
       - name: 'Run terraform format and validate'
+        run: |
+          echo 'terraform fmt'
+          echo 'terraform validate'
 
       - name: 'Run terraform tests'
+        run: |
+          echo 'terraform plan'
 
