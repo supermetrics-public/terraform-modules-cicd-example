@@ -1,0 +1,40 @@
+name: 'CI checks'
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  tf_version: '0.12.30'
+
+jobs:
+  run-terraform-check:
+    runs-on: [ ubuntu-latest ]
+    # runs-on: [ self-hosted, devops, terraform ]
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: 'Get all changed files'
+        id: changed_files
+        uses: jitterbit/get-changed-files@v1
+      
+      - run: |
+          for changed_file in ${{ steps.changed_files.outputs.all }}; do
+            echo "Do something with this ${changed_file}."
+          done
+
+      - name: 'Prepare CI environment'
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.tf_version }}
+
+      - name: 'Run terraform format and validate'
+
+      - name: 'Run terraform tests'
+

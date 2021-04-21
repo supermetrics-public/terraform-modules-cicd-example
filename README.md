@@ -13,8 +13,9 @@ Project structure:
 
 ## Requirement
 
-Terraform v0.12.30 or newer
-Terregrunt v0.23.33 or newer
+- Terraform v0.12.30 or newer
+- AWS CLI
+- GCloud SDK
 
 ## Usage
 
