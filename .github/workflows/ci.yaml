@@ -55,9 +55,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `
-            #### Terraform Format and Style 🖌 \`${{ steps.fmt.outcome }}\`
-            #### Terraform Validation 🤖 \`${{ steps.validate.outcome }}\`
-            #### Terraform Tests 📖 \`${{ steps.tests.outcome }}\`
+            #### Terraform Format and Style 🖌  \`${{ steps.fmt.outcome }}\`
+            #### Terraform Validation 🤖  \`${{ steps.validate.outcome }}\`
+            #### Terraform Tests 📖  \`${{ steps.tests.outcome }}\`
             
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
               

@@ -22,12 +22,16 @@ def get_working_directories(file_list: str) -> List[str]:
 def run_terraform_fmt(file_list: str):
     directories = get_working_directories(file_list)
 
+    is_failure = False
     for directory in directories:
         result = subprocess.run(['terraform fmt -check -no-color %s' % directory], capture_output=True, timeout=30, shell=True, universal_newlines=True)
-
+        
         if result.returncode != 0:
-            print('Terraform Format error at %s %s' % (result.stdout, result.stderr))
-            exit(result.returncode)
+            print('Terraform Format error : terraform fmt %s %s' % (result.stdout, result.stderr))
+            is_failure = True
+
+    if is_failure:
+        exit(1)
 
 
 def parse_args():
