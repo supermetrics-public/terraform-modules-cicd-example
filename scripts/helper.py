@@ -3,30 +3,30 @@
 import argparse
 import subprocess
 
+from typing import List
+
 
 def print_usage():
     print('Run with --help to get more info')
 
 
-def get_working_directories(file_list: str):
+def get_working_directories(file_list: str) -> List[str]:
     files = file_list.split(' ')
 
     directories = list(set([f.rsplit('/', 1)[0] for f in files if f.endswith('.tf')]))
     directories.sort()
 
-    print(' '.join(directories))
+    return directories
 
 
 def run_terraform_fmt(file_list: str):
-    files = file_list.split(' ')
-
-    directories = list(set([f.rsplit('/', 1)[0] for f in files]))
-    directories.sort()
+    directories = get_working_directories(file_list)
 
     for directory in directories:
         result = subprocess.run(['terraform fmt -check -no-color %s' % directory], capture_output=True, timeout=30, shell=True, universal_newlines=True)
+
         if result.returncode != 0:
-            print('Terraform Format error at %s' % result.stdout)
+            print('Terraform Format error at %s %s' % (result.stdout, result.stderr))
             exit(result.returncode)
 
 
@@ -53,5 +53,3 @@ if __name__ == '__main__':
         run_terraform_fmt(args.file_list)
     else:
         print_usage()
-
-    exit(0)
