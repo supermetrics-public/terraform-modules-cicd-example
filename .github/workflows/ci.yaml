@@ -44,6 +44,13 @@ jobs:
         id: validate
         run: python scripts/helper.py run-terraform-validate -f "${{ steps.changed_files.outputs.all }}"
 
+      - name: Configure AWS credentials from Test account
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.TF_TEST_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.TF_TEST_AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
       - name: 'Run terraform plan'
         id: plan
         run: python scripts/helper.py run-terraform-plan -f "${{ steps.changed_files.outputs.all }}"
