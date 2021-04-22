@@ -64,7 +64,7 @@ def run_terraform_validate(file_list: str):
         result = subprocess.run([terraform_validate_cmd], capture_output=True,
                                 timeout=30, shell=True, universal_newlines=True, cwd=directory)
 
-        print('Running %s' % terraform_validate_cmd)
+        print('Running %s %s' % (terraform_validate_cmd, directory))
 
         if result.returncode != 0:
             print('Terraform Validate error on directory : %s \n%s %s' % (directory, result.stdout, result.stderr))
@@ -86,7 +86,7 @@ def run_terraform_plan(file_list: str):
         result = subprocess.run([terraform_plan_cmd], capture_output=True,
                                 timeout=30, shell=True, universal_newlines=True, cwd=directory)
 
-        print('Running %s' % terraform_plan_cmd)
+        print('Running %s %s' % (terraform_plan_cmd, directory))
 
         if result.returncode != 0:
             print('Terraform Plan error on directory : %s \n%s %s' % (directory, result.stdout, result.stderr))
