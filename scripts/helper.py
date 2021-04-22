@@ -24,7 +24,7 @@ def get_working_directories(file_list: str) -> List[str]:
     for fpath in files:
         if os.path.isfile(fpath) and fpath.endswith('.tf'):
             directories.append(fpath.rsplit('/', 1)[0])
-        else:
+        elif os.path.isdir(fpath):
             directories.append(fpath)
 
     directories = list(set(directories))
