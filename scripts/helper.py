@@ -42,6 +42,8 @@ def run_terraform_fmt(file_list: str, is_check: bool):
         result = subprocess.run([terraform_fmt_cmd], capture_output=True,
                                 timeout=30, shell=True, universal_newlines=True)
 
+        print('Running %s' % terraform_fmt_cmd)
+
         if result.returncode != 0:
             print('Terraform Format error : terraform fmt %s %s' % (result.stdout, result.stderr))
             is_failure = True
@@ -62,6 +64,8 @@ def run_terraform_validate(file_list: str):
         result = subprocess.run([terraform_validate_cmd], capture_output=True,
                                 timeout=30, shell=True, universal_newlines=True, cwd=directory)
 
+        print('Running %s' % terraform_validate_cmd)
+
         if result.returncode != 0:
             print('Terraform Validate error on directory : %s \n%s %s' % (directory, result.stdout, result.stderr))
             is_failure = True
@@ -78,9 +82,11 @@ def run_terraform_plan(file_list: str):
 
     is_failure = False
     for directory in directories:
-        terraform_validate_cmd = 'terraform init && terraform get -update=true && terraform plan -no-color'
-        result = subprocess.run([terraform_validate_cmd], capture_output=True,
+        terraform_plan_cmd = 'terraform init && terraform get -update=true && terraform plan -no-color'
+        result = subprocess.run([terraform_plan_cmd], capture_output=True,
                                 timeout=30, shell=True, universal_newlines=True, cwd=directory)
+
+        print('Running %s' % terraform_plan_cmd)
 
         if result.returncode != 0:
             print('Terraform Plan error on directory : %s \n%s %s' % (directory, result.stdout, result.stderr))
