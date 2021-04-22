@@ -24,7 +24,7 @@ resource "random_string" "this" {
 module "test_simple_bucket" {
   source = "../../"
 
-  bucket_postfix = "test-simple-bucket-${random_string.this.result}"
+  bucket_postfix = "test-aws-simple-bucket-${random_string.this.result}"
 
   environment    = local.environment
   profile        = local.profile

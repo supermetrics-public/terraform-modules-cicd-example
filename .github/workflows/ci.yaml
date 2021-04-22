@@ -51,6 +51,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.TF_TEST_AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
 
+      - name: Configure GCP credentials from supermetrics-dev-sandbox project
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: supermetrics-dev-sandbox
+          service_account_key: ${{ secrets.TF_TEST_GCP_SA_KEY }}
+          export_default_credentials: true
+
       - name: 'Run terraform plan'
         id: plan
         run: python scripts/helper.py run-terraform-plan -f "${{ steps.changed_files.outputs.all }}"
