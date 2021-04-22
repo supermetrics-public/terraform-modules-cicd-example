@@ -46,7 +46,6 @@ variable "lifecycle_rule" {
 variable "profile" {
   type        = string
   description = "AWS profile"
-  default     = "dev"
 }
 
 variable "restrict_public_buckets" {

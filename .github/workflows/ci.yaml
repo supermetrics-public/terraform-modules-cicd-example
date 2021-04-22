@@ -37,27 +37,27 @@ jobs:
 
       - name: 'Run terraform format'
         id: fmt
-        run: python scripts/helper.py run-terraform-fmt -f "${{ steps.changed_files.outputs.all }}"
+        run: python scripts/helper.py run-terraform-fmt --check -f "${{ steps.changed_files.outputs.all }}"
         continue-on-error: true
 
       - name: 'Run terraform validate'
         id: validate
-        run: echo 'terraform validate'
+        run: python scripts/helper.py run-terraform-validate -f "${{ steps.changed_files.outputs.all }}"
 
-      - name: 'Run terraform tests'
-        id: tests
-        run: echo 'terraform plan'
+      - name: 'Run terraform plan'
+        id: plan
+        run: python scripts/helper.py run-terraform-plan -f "${{ steps.changed_files.outputs.all }}"
 
       - name: 'Add comment on PR'
         uses: actions/github-script@0.9.0
-        if: github.event_name == 'pull_request' && (steps.fmt.outcome != 'success' || steps.validate.outcome != 'success' || steps.tests.outcome != 'success')
+        if: github.event_name == 'pull_request' && (steps.fmt.outcome != 'success' || steps.validate.outcome != 'success' || steps.plan.outcome != 'success')
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `
             #### Terraform Format and Style 🖌  \`${{ steps.fmt.outcome }}\`
             #### Terraform Validation 🤖  \`${{ steps.validate.outcome }}\`
-            #### Terraform Tests 📖  \`${{ steps.tests.outcome }}\`
+            #### Terraform Plan 📖  \`${{ steps.plan.outcome }}\`
             
             *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
               

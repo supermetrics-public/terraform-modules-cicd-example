@@ -6,6 +6,7 @@
 
 # Ignore .terraform work directories and related files
 .terraform/
+terraform.tfstate
 *.tfstate.*
 *.plan
 *.tfplan
