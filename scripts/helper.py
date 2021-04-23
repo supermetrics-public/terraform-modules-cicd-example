@@ -23,7 +23,13 @@ def get_working_directories(file_list: str) -> List[str]:
     directories = []
     for fpath in files:
         if os.path.isfile(fpath) and fpath.endswith('.tf'):
-            directories.append(fpath.rsplit('/', 1)[0])
+            dir_path = fpath.rsplit('/', 1)[0]
+            directories.append(dir_path)
+            
+            # Include also /tests sub-direcotory if we are changing the TF files in root module
+            tests_dir = [x[0] for x in os.walk(dir_path) if '/tests/' in x[0]]
+            directories.extend(tests_dir)
+
         elif os.path.isdir(fpath):
             directories.append(fpath)
 
@@ -132,4 +138,3 @@ if __name__ == '__main__':
         run_terraform_plan(args.file_list)
     else:
         print_usage()
-
