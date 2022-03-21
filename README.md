@@ -5,13 +5,13 @@
 The project contains Supermetrics Terraform Registry modules for all the infrastructure
 
 Project structure:
-- gcp_baseline: includes modules for GCP provider
-- aws_baseline: includes modules for AWS provider
-- azure_baseline: includes modules for Azure provider
-- cloudflare_baseline: includes modules for Cloudflare provider
-- datadog_baseline: includes modules for Datadog provider
-- crosscloud_baseline: includes modules for cross-cloud provider
-- utils: includes untility scripts
+- gcp: includes modules for GCP provider
+- aws: includes modules for AWS provider
+- azure: includes modules for Azure provider
+- cloudflare: includes modules for Cloudflare provider
+- datadog: includes modules for Datadog provider
+- crosscloud: includes modules for cross-cloud provider
+- utils: includes utility scripts
 
 ## Requirement
 
@@ -26,4 +26,3 @@ Project structure:
 ### AWS
 
 ## Note
-
