@@ -54,7 +54,7 @@ jobs:
           aws-region: eu-west-1
 
       - name: Configure GCP credentials from supermetrics-dev-sandbox project
-        uses: google-github-actions/setup-gcloud@master
+        uses: google-github-actions/setup-gcloud@v0.6.0
         with:
           project_id: supermetrics-dev-sandbox
           service_account_key: ${{ secrets.TF_TEST_GCP_SA_KEY }}
