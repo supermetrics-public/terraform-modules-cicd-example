@@ -9,7 +9,7 @@ on:
       - master
 
 env:
-  tf_version: '0.12.30'
+  tf_version: '0.13.7'
 
 jobs:
   run-terraform-check:
