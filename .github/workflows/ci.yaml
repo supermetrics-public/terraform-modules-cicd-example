@@ -12,7 +12,7 @@ on:
 
 env:
   tf_version: '0.13.7'
-  tfsec_sarif_path: '.github/configs/tfsec.yml'
+  tfsec_path: '.github/configs/tfsec.yml'
 
 jobs:
   run-terraform-check:
@@ -68,7 +68,7 @@ jobs:
       - name: 'Run tfsec'
         uses: tfsec/tfsec-pr-commenter-action@v1.1.0
         with:
-          sarif_file: ${{ env.tf_version }}
+          sarif_file: ${{ env.tfsec_path }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'Add comment on PR'
