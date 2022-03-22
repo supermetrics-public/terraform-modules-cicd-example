@@ -18,7 +18,7 @@ variable "paused" {
 variable "plan" {
   description = "(Optional) The name of the commercial plan to apply to the zone, can be updated once the one is created; one of free, pro, business, enterprise."
   type        = string
-  default     = "enterprise"
+  default     = "pro"
 }
 
 variable "profile" {
