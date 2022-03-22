@@ -68,7 +68,6 @@ jobs:
       - name: 'Run tfsec'
         uses: tfsec/tfsec-pr-commenter-action@v1.1.0
         with:
-          sarif_file: ${{ env.tfsec_path }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 'Add comment on PR'
