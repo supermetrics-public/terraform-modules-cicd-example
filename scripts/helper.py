@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #
 # Helper script written in python. Provide some ultilities for CI checks and workflow
@@ -33,7 +33,8 @@ def get_working_directories(file_list: str) -> List[str]:
         elif os.path.isdir(fpath):
             directories.append(fpath)
 
-    directories = list(set(directories))
+    # Exclude ".terraform" folder
+    directories = list(set([d for d in directories if '.terraform' not in d]))
     directories.sort()
 
     return directories
@@ -45,7 +46,7 @@ def run_terraform_fmt(file_list: str, is_check: bool):
     is_failure = False
     for directory in directories:
         terraform_fmt_cmd = 'terraform fmt -check -no-color %s' % directory if is_check else 'terraform fmt -no-color %s' % directory
-        result = subprocess.run([terraform_fmt_cmd], capture_output=True,
+        result = subprocess.run([terraform_fmt_cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                 timeout=30, shell=True, universal_newlines=True)
 
         print('Running %s' % terraform_fmt_cmd)
@@ -66,8 +67,8 @@ def run_terraform_validate(file_list: str):
 
     is_failure = False
     for directory in directories:
-        terraform_validate_cmd = 'terraform init && terraform get -update=true && terraform validate -no-color'
-        result = subprocess.run([terraform_validate_cmd], capture_output=True,
+        terraform_validate_cmd = 'terraform init && terraform validate -no-color'
+        result = subprocess.run([terraform_validate_cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                 timeout=30, shell=True, universal_newlines=True, cwd=directory)
 
         print('Running %s %s' % (terraform_validate_cmd, directory))
@@ -88,8 +89,8 @@ def run_terraform_plan(file_list: str):
 
     is_failure = False
     for directory in directories:
-        terraform_plan_cmd = 'terraform init && terraform get -update=true && terraform plan -no-color'
-        result = subprocess.run([terraform_plan_cmd], capture_output=True,
+        terraform_plan_cmd = 'terraform init && terraform plan -no-color'
+        result = subprocess.run([terraform_plan_cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                 timeout=30, shell=True, universal_newlines=True, cwd=directory)
 
         print('Running %s %s' % (terraform_plan_cmd, directory))
