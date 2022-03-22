@@ -21,7 +21,7 @@ resource "random_string" "this" {
   special = false
 }
 
-module "bucket_sm_local_backup" {
+module "bucket_local_backup" {
   source = "../../"
 
   environment    = local.environment
