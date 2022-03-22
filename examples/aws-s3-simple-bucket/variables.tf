@@ -1,3 +1,15 @@
+variable "access_log_bucket_name" {
+  type        = string
+  description = "Name of the S3 bucket where S3 access logs will be sent to"
+  default     = ""
+}
+
+variable "access_log_bucket_prefix" {
+  type        = string
+  default     = "logs/"
+  description = "A prefix to prepend to the current S3 bucket name, where S3 access logs will be stored to."
+}
+
 variable "block_public_acls" {
   type        = string
   description = "(Optional) Whether Amazon S3 should block public ACLs for this bucket."
@@ -56,7 +68,7 @@ variable "restrict_public_buckets" {
 
 variable "server_cluster" {
   type        = string
-  description = "Supermetrics server cluster (eu1 / us1 / ...)"
+  description = "Server cluster (eu1 / us1 / ...)"
 }
 
 variable "versioning_enabled" {

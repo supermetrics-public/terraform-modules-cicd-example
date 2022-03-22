@@ -1,6 +1,6 @@
 data "aws_caller_identity" "current" {}
 
-resource "aws_s3_bucket" "sm-s3-bucket-data" {
+resource "aws_s3_bucket" "s3_bucket_data" {
   bucket = "${var.profile}-${var.server_cluster}-${var.environment}-${var.bucket_postfix}"
   acl    = var.bucket_acl
 
@@ -51,6 +51,11 @@ resource "aws_s3_bucket" "sm-s3-bucket-data" {
     enabled = var.versioning_enabled
   }
 
+  logging {
+    target_bucket = var.access_log_bucket_name   # - The name of the bucket that receives the log objects.
+    target_prefix = var.access_log_bucket_prefix #  - The prefix for all log object keys/
+  }
+
   tags = {
     AccountId     = data.aws_caller_identity.current.account_id
     Environment   = var.environment
@@ -59,8 +64,8 @@ resource "aws_s3_bucket" "sm-s3-bucket-data" {
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "sm-s3-bucket-data-public-access" {
-  bucket = aws_s3_bucket.sm-s3-bucket-data.id
+resource "aws_s3_bucket_public_access_block" "s3_bucket_data_public_access" {
+  bucket = aws_s3_bucket.s3_bucket_data.id
 
   block_public_acls       = var.block_public_acls
   block_public_policy     = var.block_public_policy
