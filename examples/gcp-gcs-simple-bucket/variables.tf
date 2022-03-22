@@ -5,7 +5,7 @@ variable "environment" {
 
 variable "server_cluster" {
   type        = string
-  description = "Supermetrics server cluster (central / eu1 / us1 / ...)"
+  description = "Server cluster (central / eu1 / us1 / ...)"
 }
 
 variable "bucket_name" {

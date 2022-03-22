@@ -1,5 +1,10 @@
 data "aws_caller_identity" "current" {}
 
+locals {
+  bucket      = "${var.profile}-${var.server_cluster}-${var.environment}-${var.bucket_postfix}"
+  bucket_name = local.bucket == null || local.bucket == "" ? aws_s3_bucket.sm-s3-bucket-data.id : local.bucket
+}
+
 resource "aws_s3_bucket" "sm-s3-bucket-data" {
   bucket = "${var.profile}-${var.server_cluster}-${var.environment}-${var.bucket_postfix}"
   acl    = var.bucket_acl
@@ -49,6 +54,11 @@ resource "aws_s3_bucket" "sm-s3-bucket-data" {
 
   versioning {
     enabled = var.versioning_enabled
+  }
+
+  logging = var.access_log_bucket_name == "" ? null : {
+    bucket_name = var.access_log_bucket_name
+    prefix      = "${var.access_log_bucket_prefix}${local.bucket_name}/"
   }
 
   tags = {
