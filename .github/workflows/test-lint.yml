@@ -1,0 +1,26 @@
+name: 'Linter checks'
+
+on:
+  push:
+    branches:
+      - main
+      - stage
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  baseline_checks:
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
+      - name: 'Validate JSON'
+        run: |
+          /bin/bash .github/linters/json-check.sh
+
+      - name: 'Validate YAML/YML'
+        run: |
+          /bin/bash .github/linters/yaml-checks.sh

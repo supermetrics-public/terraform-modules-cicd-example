@@ -12,6 +12,7 @@ on:
 
 env:
   tf_version: '0.13.7'
+  tfsec_sarif_path: '.github/configs/tfsec.yml'
 
 jobs:
   run-terraform-check:
@@ -63,6 +64,11 @@ jobs:
       - name: 'Run terraform plan'
         id: plan
         run: python scripts/helper.py run-terraform-plan -f "${{ steps.changed_files.outputs.all }}"
+
+      - name: 'Run tfsec'
+        uses: tfsec/tfsec-sarif-action@v0.0.6
+        with:
+          sarif_file: ${{ env.tf_version }}
 
       - name: 'Add comment on PR'
         uses: actions/github-script@0.9.0
