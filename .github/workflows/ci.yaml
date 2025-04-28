@@ -34,7 +34,7 @@ jobs:
           done
 
       - name: 'Prepare CI environment'
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.tf_version }}
 
