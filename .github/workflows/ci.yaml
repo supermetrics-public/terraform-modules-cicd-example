@@ -66,7 +66,7 @@ jobs:
         run: python scripts/helper.py run-terraform-plan -f "${{ steps.changed_files.outputs.all }}"
 
       - name: 'Run tfsec'
-        uses: tfsec/tfsec-pr-commenter-action@v1.1.0
+        uses: tfsec/tfsec-pr-commenter-action@v1.3.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
